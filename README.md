@@ -26,7 +26,7 @@ Edit **one array** in `src/site.config.ts` — no markup changes:
 ```ts
 export const SCHOOLS = [
   { name: 'Dartmouth', monogram: 'D', url: 'https://dartmouth.campusfreebies.com', accent: '#005529' },
-  { name: 'Carnegie Mellon', monogram: 'CMU', url: 'https://cmu.campusfreebies.com', accent: '#C8102E' },
+  { name: 'Carnegie Mellon', monogram: 'CMU', url: 'https://cmu.campusfreebies.com', accent: '#c41330' },
   // { name: 'Your School', monogram: 'YS', url: 'https://yourschool.campusfreebies.com' },
 ];
 ```
@@ -41,44 +41,29 @@ footer + support section render "♥ Sponsor this project". Fill a `kofi` or
 `buyMeACoffee` handle later and it auto-overrides to "☕ Buy us a coffee".
 Keep `.github/FUNDING.yml` in sync (powers the repo's native Sponsor button).
 
-## Deploy to the apex (Sara's remaining steps)
+## Deploy — live
 
-The repo and build are done. Domain registration + DNS are yours (they need your
-Cloudflare/Vercel accounts). `campusfreebies.com` is already registered at
-Cloudflare; the two subdomains already point at their own Vercel projects.
+`https://campusfreebies.com` is live and serving this hub. Wiring, for the record:
 
-1. **Push the repo to GitHub** (gh CLI is not installed here, so this was left local):
-   ```bash
-   # create an empty repo named e.g. freestuff-hub on github.com/ssskay first, then:
-   cd /Users/sarakay/freestuff-hub
-   git remote add origin https://github.com/ssskay/freestuff-hub.git
-   git push -u origin main
-   ```
+- **GitHub:** github.com/ssskay/freestuff-hub (public).
+- **Vercel:** project `freestuff-hub` under `ssskays-projects`; `main` auto-deploys.
+  Astro auto-detected (build `npm run build`, output `dist`). Separate project from
+  the Dartmouth/CMU ones.
+- **Apex DNS (Cloudflare):** `A @ → 76.76.21.21`, **DNS only / grey cloud** (not
+  proxied/orange — orange breaks Vercel's SSL, same rule as the subdomains). Vercel
+  auto-issued the cert once it resolved.
 
-2. **Create a new Vercel project** for this repo (framework auto-detects as Astro;
-   build `npm run build`, output `dist`). Keep it separate from the Dartmouth/CMU
-   projects:
-   ```bash
-   vercel link        # pick/create project "freestuff-hub" under ssskays-projects
-   vercel --prod
-   ```
+A push to `main` ships. To deploy by hand: `vercel --prod --scope ssskays-projects`.
 
-3. **Attach the apex domain** to this Vercel project:
-   ```bash
-   vercel domains add campusfreebies.com freestuff-hub
-   vercel domains add www.campusfreebies.com freestuff-hub   # optional www -> apex
-   ```
+### Optional, not done
+- **`www` redirect.** `www.campusfreebies.com` has no record yet (Cloudflare flags
+  this). To add it: `vercel domains add www.campusfreebies.com` then a Cloudflare
+  `CNAME www → cname.vercel-dns.com` (grey), or a redirect rule www → apex.
+- **Email/anti-spoofing.** No MX/SPF/DMARC on the apex. Only needed if you want to
+  receive mail at `@campusfreebies.com`; a DMARC `p=reject` is cheap anti-spoofing
+  hygiene if the name ever sends mail.
 
-4. **Cloudflare apex DNS.** Add the records Vercel shows for the apex. For a root
-   (`@`) record Cloudflare supports CNAME flattening, so:
-   - `@` → `cname.vercel-dns.com`  — **DNS only / grey cloud** (not proxied/orange;
-     orange breaks Vercel's SSL, same rule as the subdomains).
-   - Optional `www` → `cname.vercel-dns.com` (grey) if you added the www domain.
-
-   Once it resolves and Vercel issues the cert, `https://campusfreebies.com` serves
-   this hub. The subdomains keep working unchanged.
-
-> Note: this environment's sandbox blocks port-53 DNS — verify resolution with
+> Note: a sandboxed shell may block port-53 DNS — verify resolution with
 > `curl https://dns.google/resolve?name=campusfreebies.com` rather than `dig`.
 
 ## What is intentionally NOT here

@@ -37,7 +37,7 @@ export const SCHOOLS: Array<{
   accent?: string;
 }> = [
   { name: 'Dartmouth', monogram: 'D', url: 'https://dartmouth.campusfreebies.com', accent: '#005529' },
-  { name: 'Carnegie Mellon', monogram: 'CMU', url: 'https://cmu.campusfreebies.com', accent: '#C8102E' },
+  { name: 'Carnegie Mellon', monogram: 'CMU', url: 'https://cmu.campusfreebies.com', accent: '#c41330' },
 ];
 
 /**
