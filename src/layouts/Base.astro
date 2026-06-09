@@ -8,13 +8,16 @@ interface Props {
   description: string;
   /** og:type — "website" for index/faq, "article" for the story. */
   ogType?: string;
+  /** Social-share image, resolved against the site origin. Defaults to /og.png. */
+  image?: string;
 }
 
-const { title, description, ogType = 'website' } = Astro.props;
+const { title, description, ogType = 'website', image = '/og.png' } = Astro.props;
 const tip = fundingLink();
 
 const siteOrigin = Astro.site ?? new URL(Astro.url.origin);
 const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
+const imageURL = new URL(image, siteOrigin);
 ---
 
 <!doctype html>
@@ -37,9 +40,13 @@ const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
 
     <!-- Per-page structured data (JSON-LD) goes here. -->
     <slot name="head" />
