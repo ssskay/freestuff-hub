@@ -1,5 +1,6 @@
 ---
 import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import { SITE, fundingLink } from '../site.config';
 
 interface Props {
@@ -78,6 +79,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
     </footer>
 
     <Analytics />
+    <SpeedInsights />
 
     <!-- Shared chrome is global so it reaches slotted page content (Astro scopes
          component <style> by default, which would not apply across the slot). -->
