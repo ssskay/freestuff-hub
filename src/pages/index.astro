@@ -1,433 +1,194 @@
 ---
-import Analytics from '@vercel/analytics/astro';
+import Base from '../layouts/Base.astro';
 import { SITE, SCHOOLS, fundingLink } from '../site.config';
 
 const tip = fundingLink();
-
-const siteOrigin = Astro.site ?? new URL(Astro.url.origin);
-const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
-
-const title = SITE.name;
+const title = `${SITE.name} — verified free perks at your school`;
 const description = SITE.tagline;
+
+const origin = SITE.url;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${origin}/#website`,
+      url: origin,
+      name: SITE.name,
+      description: SITE.tagline,
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${origin}/#org`,
+      name: SITE.name,
+      url: origin,
+      description:
+        'A trust-based, ad-free catalog of things that are genuinely free for students, one verified catalog per campus.',
+      sameAs: [SITE.template],
+    },
+  ],
+};
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/tokens.css" />
-    <meta name="generator" content={Astro.generator} />
+<Base title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
 
-    <!-- Open Graph / Twitter: shared links unfurl as a card instead of a naked URL. -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+  <main id="main" tabindex="-1">
+    <section class="hero">
+      <p class="eyebrow">An independent, student-built platform</p>
+      <h1 class="hero-title">{SITE.name}</h1>
+      <p class="hero-deck">{SITE.tagline}</p>
+      <div class="hero-actions">
+        <a href="#schools" class="btn btn-primary">Find your school</a>
+        <a href={SITE.template} class="btn btn-ghost" rel="noopener" target="_blank">Bring it to your campus</a>
+      </div>
+    </section>
 
-    <title>{title}</title>
-  </head>
-  <body>
-    <a href="#main" class="skip-link">Skip to content</a>
-
-    <header>
-      <nav class="nav-inline" aria-label="Primary">
-        <div class="nav-container">
-          <a href="/" class="wordmark">{SITE.name}</a>
-          <div class="nav-links">
-            <a href="#schools" class="nav-link">Schools</a>
-            <a href={SITE.template} class="nav-link">Bring it to your campus</a>{tip && (
-              <a href={tip.href} class="nav-link" rel="noopener" target="_blank">{tip.label}</a>
-            )}
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    <main id="main" tabindex="-1">
-      <section class="hero">
-        <p class="eyebrow">An independent, student-built platform</p>
-        <h1 class="hero-title">{SITE.name}</h1>
-        <p class="hero-deck">{SITE.tagline}</p>
-        <div class="hero-actions">
-          <a href="#schools" class="btn btn-primary">Find your school</a>
-          <a href={SITE.template} class="btn btn-ghost" rel="noopener" target="_blank">Bring it to your campus</a>
-        </div>
-      </section>
-
-      <section id="schools" class="schools" aria-labelledby="schools-heading">
-        <h2 id="schools-heading" class="section-heading">Live schools</h2>
-        <ul class="school-grid" role="list">
-          {SCHOOLS.map((s) => (
-            <li>
-              <a class="school-card" href={s.url} rel="noopener">
-                <span class="school-monogram" style={`--mono: ${s.accent ?? 'var(--color-accent)'}`}>{s.monogram}</span>
-                <span class="school-body">
-                  <span class="school-name">Free Stuff @ {s.name}</span>
-                  <span class="school-host">{s.url.replace('https://', '')}</span>
-                </span>
-                <span class="school-arrow" aria-hidden="true">&rarr;</span>
-              </a>
-            </li>
-          ))}
+    <section id="schools" class="schools" aria-labelledby="schools-heading">
+      <h2 id="schools-heading" class="section-heading">Live schools</h2>
+      <ul class="school-grid" role="list">
+        {SCHOOLS.map((s) => (
           <li>
-            <a class="school-card school-card-cta" href={SITE.template} rel="noopener" target="_blank">
-              <span class="school-monogram school-monogram-cta" aria-hidden="true">+</span>
+            <a class="school-card" href={s.url} rel="noopener">
+              <span class="school-monogram" style={`--mono: ${s.accent ?? 'var(--color-accent)'}`}>{s.monogram}</span>
               <span class="school-body">
-                <span class="school-name">Don't see your school?</span>
-                <span class="school-host">Bring this to your campus &rarr; the open template</span>
+                <span class="school-name">Free Stuff @ {s.name}</span>
+                <span class="school-host">{s.url.replace('https://', '')}</span>
               </span>
+              <span class="school-arrow" aria-hidden="true">&rarr;</span>
             </a>
           </li>
-        </ul>
-      </section>
+        ))}
+        <li>
+          <a class="school-card school-card-cta" href={SITE.template} rel="noopener" target="_blank">
+            <span class="school-monogram school-monogram-cta" aria-hidden="true">+</span>
+            <span class="school-body">
+              <span class="school-name">Don't see your school?</span>
+              <span class="school-host">Bring this to your campus &rarr; the open template</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-      <section class="support" aria-labelledby="support-heading">
-        <h2 id="support-heading" class="section-heading">Keep it free, keep it honest</h2>
-        <p class="support-copy">
-          No ads, no affiliate links, no data resold — every perk is verified and shown with its real source.
-          A small tip covers the domain and keeps the catalogs current.
-        </p>
-        {tip && (
-          <a class="btn btn-primary" href={tip.href} rel="noopener" target="_blank">{tip.label}</a>
-        )}
-      </section>
-    </main>
+    <section class="support" aria-labelledby="support-heading">
+      <h2 id="support-heading" class="section-heading">Keep it free, keep it honest</h2>
+      <p class="support-copy">
+        No ads, no affiliate links, no data resold — every perk is verified and shown with its real source.
+        A small tip covers the domain and keeps the catalogs current.
+      </p>
+      {tip && (
+        <a class="btn btn-primary" href={tip.href} rel="noopener" target="_blank">{tip.label}</a>
+      )}
+    </section>
+  </main>
 
-    <footer class="footer-terse">
-      <div class="footer-container">
-        <p>An open, student-built platform — one verified free-stuff catalog per campus. <a href={SITE.template} class="footer-link" rel="noopener" target="_blank">Fork the template</a>.</p>
-        <p class="footer-disclosure">Not affiliated with, endorsed by, or an official site of any university. Each school catalog is community-maintained — always verify access details on the linked official pages.</p>
-        <p class="footer-links">
-          <a href={SITE.template} class="footer-link" rel="noopener" target="_blank">Template</a>{tip && (
-            <Fragment> · <a href={tip.href} class="footer-link" rel="noopener" target="_blank">{tip.label}</a></Fragment>
-          )}
-        </p>
-      </div>
-    </footer>
+  <style>
+    .hero {
+      padding: var(--space-3xl) 0 var(--space-2xl);
+      max-width: var(--measure);
+    }
+    .eyebrow {
+      margin: 0 0 var(--space-sm);
+      font-size: var(--text-sm);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--text-5xl);
+      line-height: var(--leading-tight);
+      font-weight: 600;
+      color: var(--color-ink);
+      margin: 0 0 var(--space-md);
+    }
+    .hero-deck {
+      font-size: var(--text-xl);
+      line-height: var(--leading-snug);
+      color: var(--color-ink-muted);
+      margin: 0 0 var(--space-xl);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
 
-    <Analytics />
+    .schools {
+      padding: var(--space-xl) 0;
+      border-top: var(--rule-thin) solid var(--color-border);
+    }
+    .school-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+      gap: var(--space-md);
+    }
+    .school-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      border: var(--rule-thin) solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-paper);
+      text-decoration: none;
+      transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+    }
+    .school-card:hover {
+      border-color: var(--color-border-strong);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    }
+    .school-monogram {
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: var(--radius-md);
+      background: var(--mono, var(--color-accent));
+      color: var(--color-paper);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: var(--text-sm);
+    }
+    .school-monogram-cta {
+      background: transparent;
+      color: var(--color-ink-subtle);
+      border: var(--rule-base) dashed var(--color-border-strong);
+      font-size: var(--text-2xl);
+      font-weight: 400;
+    }
+    .school-body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3xs);
+      min-width: 0;
+    }
+    .school-name { font-size: var(--text-lg); font-weight: 600; color: var(--color-ink); }
+    .school-host { font-size: var(--text-sm); color: var(--color-ink-subtle); }
+    .school-arrow { margin-left: auto; font-size: var(--text-xl); color: var(--color-accent); }
+    .school-card-cta { border-style: dashed; background: var(--color-paper-2); }
 
-    <style>
-      /* Nav: N7 Inline + Wordmark */
-      .nav-inline {
-        border-top: 4px solid var(--color-accent);
-        border-bottom: var(--rule-thin) solid var(--color-border);
-        background: var(--color-paper);
-      }
+    .support {
+      padding: var(--space-2xl) 0;
+      border-top: var(--rule-thin) solid var(--color-border);
+      max-width: var(--measure);
+    }
+    .support-copy {
+      font-size: var(--text-lg);
+      line-height: var(--leading-relaxed);
+      color: var(--color-ink-muted);
+      margin: 0 0 var(--space-lg);
+    }
 
-      .nav-container {
-        max-width: 72rem;
-        margin: 0 auto;
-        padding: var(--space-md) var(--space-lg);
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: var(--space-md);
-      }
-
-      .nav-links {
-        display: flex;
-        align-items: baseline;
-        gap: var(--space-md);
-      }
-
-      .wordmark {
-        font-family: var(--font-display);
-        font-style: italic;
-        font-size: var(--text-xl);
-        font-weight: 600;
-        color: var(--color-accent);
-        text-decoration: none;
-        transition: color var(--dur-fast) var(--ease-out);
-      }
-
-      .wordmark:hover {
-        color: var(--color-accent-hover);
-      }
-
-      .nav-link {
-        font-size: var(--text-base);
-        color: var(--color-ink-muted);
-        text-decoration: none;
-        transition: color var(--dur-fast) var(--ease-out);
-        white-space: nowrap;
-      }
-
-      .nav-link:hover {
-        color: var(--color-accent);
-      }
-
-      /* Shared content frame */
-      main {
-        max-width: 72rem;
-        margin: 0 auto;
-        padding: 0 var(--space-lg);
-      }
-
-      /* Hero */
-      .hero {
-        padding: var(--space-3xl) 0 var(--space-2xl);
-        max-width: var(--measure);
-      }
-
-      .eyebrow {
-        margin: 0 0 var(--space-sm);
-        font-size: var(--text-sm);
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: var(--color-accent);
-      }
-
-      .hero-title {
-        font-family: var(--font-display);
-        font-size: var(--text-5xl);
-        line-height: var(--leading-tight);
-        font-weight: 600;
-        color: var(--color-ink);
-        margin: 0 0 var(--space-md);
-      }
-
-      .hero-deck {
-        font-size: var(--text-xl);
-        line-height: var(--leading-snug);
-        color: var(--color-ink-muted);
-        margin: 0 0 var(--space-xl);
-      }
-
-      .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-sm);
-      }
-
-      /* Buttons */
-      .btn {
-        display: inline-block;
-        padding: var(--space-xs) var(--space-md);
-        border-radius: var(--radius-md);
-        font-size: var(--text-base);
-        text-decoration: none;
-        transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
-      }
-
-      .btn-primary {
-        background: var(--color-accent);
-        color: var(--color-paper);
-        border: var(--rule-thin) solid var(--color-accent);
-      }
-
-      .btn-primary:hover {
-        background: var(--color-accent-hover);
-        border-color: var(--color-accent-hover);
-      }
-
-      .btn-ghost {
-        background: transparent;
-        color: var(--color-accent);
-        border: var(--rule-thin) solid var(--color-border-strong);
-      }
-
-      .btn-ghost:hover {
-        border-color: var(--color-accent);
-      }
-
-      /* Section heading */
-      .section-heading {
-        font-family: var(--font-display);
-        font-size: var(--text-2xl);
-        font-weight: 600;
-        color: var(--color-ink);
-        margin: 0 0 var(--space-md);
-      }
-
-      /* Schools */
-      .schools {
-        padding: var(--space-xl) 0;
-        border-top: var(--rule-thin) solid var(--color-border);
-      }
-
-      .school-grid {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-        gap: var(--space-md);
-      }
-
-      .school-card {
-        display: flex;
-        align-items: center;
-        gap: var(--space-md);
-        padding: var(--space-md);
-        border: var(--rule-thin) solid var(--color-border);
-        border-radius: var(--radius-lg);
-        background: var(--color-paper);
-        text-decoration: none;
-        transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
-      }
-
-      .school-card:hover {
-        border-color: var(--color-border-strong);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-      }
-
-      .school-monogram {
-        flex: none;
-        display: grid;
-        place-items: center;
-        width: 3rem;
-        height: 3rem;
-        border-radius: var(--radius-md);
-        background: var(--mono, var(--color-accent));
-        color: var(--color-paper);
-        font-family: var(--font-body);
-        font-weight: 700;
-        font-size: var(--text-sm);
-      }
-
-      .school-monogram-cta {
-        background: transparent;
-        color: var(--color-ink-subtle);
-        border: var(--rule-base) dashed var(--color-border-strong);
-        font-size: var(--text-2xl);
-        font-weight: 400;
-      }
-
-      .school-body {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-3xs);
-        min-width: 0;
-      }
-
-      .school-name {
-        font-size: var(--text-lg);
-        font-weight: 600;
-        color: var(--color-ink);
-      }
-
-      .school-host {
-        font-size: var(--text-sm);
-        color: var(--color-ink-subtle);
-      }
-
-      .school-arrow {
-        margin-left: auto;
-        font-size: var(--text-xl);
-        color: var(--color-accent);
-      }
-
-      .school-card-cta {
-        border-style: dashed;
-        background: var(--color-paper-2);
-      }
-
-      /* Support / tip jar */
-      .support {
-        padding: var(--space-2xl) 0;
-        border-top: var(--rule-thin) solid var(--color-border);
-        max-width: var(--measure);
-      }
-
-      .support-copy {
-        font-size: var(--text-lg);
-        line-height: var(--leading-relaxed);
-        color: var(--color-ink-muted);
-        margin: 0 0 var(--space-lg);
-      }
-
-      /* Footer: Ft2 Terse statement */
-      .footer-terse {
-        margin-top: var(--space-2xl);
-        padding: var(--space-xl) var(--space-lg);
-        border-top: var(--rule-thin) solid var(--color-border);
-        background: var(--color-paper-2);
-      }
-
-      .footer-container {
-        max-width: 72rem;
-        margin: 0 auto;
-      }
-
-      .footer-terse p {
-        margin: 0;
-        font-size: var(--text-sm);
-        color: var(--color-ink-muted);
-        line-height: var(--leading-relaxed);
-      }
-
-      .footer-disclosure {
-        margin-top: var(--space-2xs) !important;
-        font-size: var(--text-xs) !important;
-        color: var(--color-ink-subtle) !important;
-      }
-
-      .footer-links {
-        margin-top: var(--space-xs) !important;
-        font-size: var(--text-sm) !important;
-      }
-
-      .footer-link {
-        color: var(--color-accent);
-        text-decoration: none;
-        transition: color var(--dur-fast) var(--ease-out);
-      }
-
-      .footer-link:hover {
-        color: var(--color-accent-hover);
-        text-decoration: underline;
-      }
-
-      @media (max-width: 768px) {
-        .nav-container {
-          padding: var(--space-sm) var(--space-md);
-          gap: var(--space-2xs) var(--space-sm);
-          flex-wrap: wrap;
-          align-items: center;
-        }
-
-        .nav-links {
-          flex-wrap: wrap;
-          gap: var(--space-2xs) var(--space-md);
-        }
-
-        .wordmark {
-          font-size: var(--text-lg);
-        }
-
-        .nav-link {
-          font-size: var(--text-sm);
-        }
-
-        main {
-          padding: 0 var(--space-md);
-        }
-
-        .hero {
-          padding: var(--space-2xl) 0 var(--space-xl);
-        }
-
-        .hero-title {
-          font-size: var(--text-4xl);
-        }
-
-        .footer-terse {
-          padding: var(--space-lg) var(--space-md);
-        }
-      }
-    </style>
-  </body>
-</html>
+    @media (max-width: 768px) {
+      .hero { padding: var(--space-2xl) 0 var(--space-xl); }
+      .hero-title { font-size: var(--text-4xl); }
+    }
+  </style>
+</Base>

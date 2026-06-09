@@ -1,0 +1,156 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site.config';
+
+const title = `FAQ — ${SITE.name}`;
+const description =
+  'How Free Stuff on Campus works: what counts as free, how it differs from student-discount sites, how listings stay accurate, and how it stays ad-free.';
+
+// One source of truth: rendered to HTML below and to FAQPage JSON-LD for search.
+const faqs: { q: string; a: string }[] = [
+  {
+    q: 'Is everything on here actually free, or are these student discounts?',
+    a: 'Actually free. A listing only qualifies if a student can get it without paying money — free software in the labs, a transit pass, grants, free admission, and so on. Discounts do not qualify: a discount is still something you pay for. If part of something is free and part is paid, the listing leads with the free part and names the paid part.',
+  },
+  {
+    q: 'How is this different from UNiDAYS or Student Beans?',
+    a: 'Those are student-discount marketplaces — brands pay them to put deals in front of students, so the listings are advertising. This is the opposite: it lists things that are already free for you, nobody pays to be included, and there are no ads or affiliate links. The whole point is that you can trust every entry because no one has an agenda behind it.',
+  },
+  {
+    q: 'What counts as "free"?',
+    a: 'No payment, ever, to get the core benefit. Conditions like showing your student ID, reserving ahead, or limited hours are fine — those are still free. Credits and grants given to you (a free printing quota, a stipend) count too, because you receive them rather than pay them. Anything that requires a membership fee, a purchase, or a discounted-but-still-paid price does not.',
+  },
+  {
+    q: 'How do you make money? Is there a catch?',
+    a: 'There is no catch and almost no money. The catalog is funded by an optional tip jar (GitHub Sponsors / buy us a coffee) and nothing else. No ads, no affiliate links, no selling data — because the first ad is the moment you can no longer tell whether a listing is honest.',
+  },
+  {
+    q: 'How do you keep the listings accurate?',
+    a: 'Every entry shows a last-verified date, out in the open. A verification tool re-checks links and flags entries that are going stale, and a written rule set keeps not-free things (and discounts) out. Real-world perks still change, so if you spot something wrong, tell us and it gets fixed — corrections are the point.',
+  },
+  {
+    q: 'Which schools are covered, and can I add mine?',
+    a: 'Dartmouth and Carnegie Mellon are live, each at its own subdomain. The whole thing is open source, so anyone can stand up a catalog for their campus from the template — it inherits the same rules, the same verifier, and the same no-ads promise. "Bring it to your campus" links to the template.',
+  },
+  {
+    q: 'Are you affiliated with the universities?',
+    a: 'No. This is an independent, student-built project — not affiliated with, endorsed by, or an official site of any university. Always confirm access details on the official pages each listing links to.',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+
+  <main id="main" tabindex="-1">
+    <section class="faq-hero">
+      <p class="eyebrow">Questions</p>
+      <h1 class="faq-title">How it works</h1>
+      <p class="faq-deck">Short answers to what people ask most — what counts as free, how it's different from discount sites, and how it stays honest.</p>
+    </section>
+
+    <section class="faq-list" aria-label="Frequently asked questions">
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary class="faq-q">{f.q}</summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
+      ))}
+    </section>
+
+    <section class="faq-cta">
+      <p>Didn't find your answer? <a href={SITE.template} class="faq-link" rel="noopener" target="_blank">The project is open source</a> — or browse a school's catalog from the <a href="/#schools" class="faq-link">homepage</a>.</p>
+    </section>
+  </main>
+
+  <style>
+    .faq-hero { padding: var(--space-3xl) 0 var(--space-xl); max-width: var(--measure); }
+    .eyebrow {
+      margin: 0 0 var(--space-sm);
+      font-size: var(--text-sm);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+    .faq-title {
+      font-family: var(--font-display);
+      font-size: var(--text-5xl);
+      line-height: var(--leading-tight);
+      font-weight: 600;
+      color: var(--color-ink);
+      margin: 0 0 var(--space-md);
+    }
+    .faq-deck {
+      font-size: var(--text-xl);
+      line-height: var(--leading-snug);
+      color: var(--color-ink-muted);
+      margin: 0;
+    }
+
+    .faq-list {
+      max-width: var(--measure);
+      padding: var(--space-lg) 0 var(--space-2xl);
+      border-top: var(--rule-thin) solid var(--color-border);
+      margin-top: var(--space-xl);
+    }
+    .faq-item {
+      border-bottom: var(--rule-thin) solid var(--color-border);
+      padding: var(--space-md) 0;
+    }
+    .faq-q {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-ink);
+      cursor: pointer;
+      list-style: none;
+      position: relative;
+      padding-right: var(--space-lg);
+    }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-q::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: var(--color-accent);
+      font-weight: 400;
+      font-size: var(--text-xl);
+      line-height: 1;
+    }
+    .faq-item[open] .faq-q::after { content: '–'; }
+    .faq-a {
+      margin: var(--space-sm) 0 0;
+      font-size: var(--text-base);
+      line-height: var(--leading-relaxed);
+      color: var(--color-ink-muted);
+    }
+
+    .faq-cta {
+      max-width: var(--measure);
+      padding: 0 0 var(--space-2xl);
+    }
+    .faq-cta p {
+      font-size: var(--text-base);
+      color: var(--color-ink-muted);
+      line-height: var(--leading-relaxed);
+    }
+    .faq-link { color: var(--color-accent); text-decoration: none; }
+    .faq-link:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .faq-hero { padding: var(--space-2xl) 0 var(--space-lg); }
+      .faq-title { font-size: var(--text-4xl); }
+    }
+  </style>
+</Base>
