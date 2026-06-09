@@ -1,0 +1,16 @@
+# Free Stuff on Campus
+
+> A trust-based, ad-free catalog of things that are genuinely free for students — one verified catalog per campus. Only listings a student can get WITHOUT paying money qualify: no discounts, no affiliate links, no ads. Every entry shows a last-verified date.
+
+This is the umbrella hub. Each school has its own catalog at its own subdomain.
+
+## Schools
+- [Free Stuff @ Dartmouth](https://dartmouth.campusfreebies.com): verified free perks for Dartmouth students and alumni
+- [Free Stuff @ Carnegie Mellon](https://cmu.campusfreebies.com): verified free perks for Carnegie Mellon students
+
+## About
+- [FAQ](https://campusfreebies.com/faq): what counts as free, and how this differs from student-discount sites like UNiDAYS and Student Beans (those list paid discounts; this lists things that are already free)
+- [Story](https://campusfreebies.com/story): how the agent-maintained catalog works and why it carries no ads
+
+## Use it elsewhere
+- [Open-source template](https://github.com/ssskay/freestuff-template): fork it to build a verified free-perks catalog for any campus
