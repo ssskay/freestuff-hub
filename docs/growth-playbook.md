@@ -1,0 +1,117 @@
+# Growth playbook — Free Stuff on Campus
+
+**Goal:** get it seen (good on my name) and maybe a non-empty tip jar. **No ads, ever.**
+Optimize for least effort. Check a box when it's done; nothing here has a deadline.
+
+The single highest-value chain: **publish the write-up → Show HN the template → everything
+else amplifies it.** If you only do one thing, do that.
+
+---
+
+## This week (highest leverage)
+
+- [ ] **Publish the write-up.** `docs/writeup-agent-maintained-catalog.md` → your personal
+  site / dev.to / Medium. Read it in your own voice first; change anything that isn't you.
+- [ ] **Before publishing, make "agent-maintained" literally true:** activate the weekly
+  verifier by adding the `ANTHROPIC_API_KEY` GitHub secret (the one open TODO). Or soften
+  that paragraph if you'd rather not yet. Don't claim it runs if it isn't running.
+- [ ] **Show HN the _template_, not the catalog.** (Catalogs get flagged as "curated lists";
+  a forkable tool is what Show HN is for.) Title + first comment below.
+- [ ] **Post in r/Dartmouth and r/cmu as a resource** — contribute to an existing thread
+  first, link second. Template below. Read each sub's sidebar rules.
+- [ ] **Email the channels that already reach students** — residential life, financial-aid /
+  first-gen office, orientation leaders. Template below.
+
+## This month (compounds quietly)
+
+- [ ] **Google Search Console:** submit each subdomain; make page titles match real searches
+  ("free printing Dartmouth", "is X free at CMU"). Verify once, then leave it.
+- [ ] **Template on-ramp:** one-paragraph "bring it to your campus" in the template README
+  so a stranger can fork it without asking you anything.
+- [ ] **Pitch the student paper** (*The Dartmouth* / *The Tartan*) as a *story*, not a promo:
+  "a student built an agent-maintained catalog of genuinely-free perks."
+
+## Opportunistic (do once, ignore)
+
+- [ ] Ask subreddit mods to add it to the resources **wiki** (don't self-add).
+- [ ] Email an academic **librarian** — these land in "student resources" LibGuides and stay.
+- [ ] Let known **organizers** share it in class GroupMe/Discord. Don't cold-drop it yourself.
+
+---
+
+## Copy-paste templates
+
+### Show HN
+**Title** (no hype, no exclamation, no company-name username):
+> Show HN: An agent-maintained catalog of genuinely-free student perks (fork for your campus)
+
+**First comment:**
+> I kept finding out too late about stuff my school already gave me for free — Adobe in
+> the labs, a city transit pass, grants you could just apply for — so I started putting it
+> in one place. It's now live for two schools (Dartmouth and CMU).
+>
+> The hard part wasn't the list, it was trust: links rot and perks quietly add fees, and
+> the existing student-deal sites are affiliate/ad plays, so you can't tell which entries
+> are honest. So there's one rule — an entry only qualifies if a student gets it *without
+> paying money* (a discount doesn't count; a discount is an ad with a number on it) — and
+> it's enforced by a test in the build. Every entry has a last-verified date, and a verifier
+> I built runs on a schedule to flag dead links and stale entries. It can't catch a perk
+> that quietly changed terms; that still needs a human. No ads, funded by a tip jar.
+>
+> The engine is open source and each school is a fork that inherits the same rules, so you
+> can stand one up for your own campus. Template: github.com/ssskay/freestuff-template ·
+> Live: campusfreebies.com . Honest limits: coverage is uneven and two schools isn't proof
+> the pattern travels — the third, run by someone who isn't me, is the real test. Feedback
+> welcome.
+
+### Reddit (r/Dartmouth, r/cmu) — only after answering a real thread, or as a standalone if the sub allows
+**Title:**
+> A running list of stuff that's actually free here (verified, no ads, open source)
+
+**Body:**
+> I got tired of finding out about free things a year too late, so I keep a list: [free
+> Adobe in the labs / the transit pass / DOC gear rental — swap in 2–3 real ones for the
+> school]. Everything on it is genuinely free (no "student discount" stuff), each entry has
+> a last-checked date, and there are no ads or affiliate links — it's a non-commercial side
+> project and the code's open. Link: [subdomain]. If anything's wrong or missing, tell me
+> and I'll fix it — corrections are the whole point.
+
+*Rule of thumb: 9 genuine contributions per 1 self-link. If your account has no history in
+the sub, comment helpfully on a few threads first. Cold-dropping a link is how you get
+banned and look like the exact spam this project isn't.*
+
+### Institutional outreach email (res life / financial aid / first-gen / orientation)
+**Subject:** A free, no-ads resource for students — feel free to share
+
+> Hi [name],
+>
+> I'm a [Dartmouth/CMU] student and I built a small, free catalog of perks that are
+> genuinely free for students here — software, transit, grants, that kind of thing. Every
+> entry is verified with a date, there are no ads or affiliate links, and it's a
+> non-commercial project. If it's useful, feel free to share it with students or link it
+> from your resources page: [subdomain].
+>
+> Happy to add anything your office offers that students miss. Thanks!
+> [Sara]
+
+*This is endorsement-as-resource (they link because it helps students), not advertising.
+The line stays clean as long as no money or paid placement is involved.*
+
+---
+
+## Guardrails (these *are* the differentiator — don't cross them)
+
+- **No cold link-drops on Reddit.** Contribute first, link second.
+- **No booster/sockpuppet comments** on HN or Reddit, and don't ask friends to. Detection =
+  reputational damage worse than no post.
+- **Endorsement is clean; paid placement is an ad.** An office linking you because it helps
+  students is fine. The moment money, a "partner," or paid placement enters, it's an ad —
+  and the no-agenda promise is the whole project.
+
+## What actually moves the needle vs. busywork
+
+- **Real list:** institutional emails + subreddits (for *users*); write-up + Show HN (for
+  *your name*). These four are the project.
+- **Quiet compounders:** SEO, the template loop, librarians/wikis. Set once, forget.
+- **Skip:** chasing every GroupMe/Discord by hand, posting cadence on social, anything that
+  needs daily tending. Low yield, high effort — not worth it.
