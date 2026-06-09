@@ -39,6 +39,42 @@ else amplifies it.** If you only do one thing, do that.
 
 ---
 
+## SEO & analytics
+
+**Don't fight UNiDAYS on their turf — take the traffic they can't serve.** UNiDAYS/Student
+Beans own *transactional* "student discount [brand]" queries with a giant domain; a small
+site won't outrank them there, and those searchers want discounts, which we don't have.
+The winnable, on-brand queries are the "actually free" ones they ignore:
+
+- `free [thing] [school]` — "free printing dartmouth", "free adobe cmu", "free transit cmu"
+- `is [thing] free for students`, `[thing] free with student id`
+- `free stuff for [school] students`, `what's actually free in college`
+
+These are lower-competition and intent-matched (free-seekers, not deal-seekers), and the
+catalog is the perfect answer. Moves that compound:
+
+- [ ] **The `/faq` page is the SEO engine** (done — FAQPage structured data). It targets the
+  "is it actually free / how is this different from UNiDAYS" long-tail. Add school-specific
+  Q&As over time ("Is the CMU transit pass really free?").
+- [ ] **Match page titles + H1s to real searches** on each school site (not just the hub).
+- [ ] **Structured data is shipped:** WebSite/Organization (home), FAQPage (/faq), Article
+  (/story). Validate at [search.google.com/test/rich-results](https://search.google.com/test/rich-results).
+- [ ] **Internal links + sitemaps** already exist; keep new pages in the sitemap (automatic).
+
+**Analytics — what to actually use (and the trust trade-off):**
+- ✅ **Vercel Web Analytics** — already installed, cookieless, no consent banner, on-brand.
+  This is your usage/pageviews. Keep it.
+- ✅ **Google Search Console** — this is what "SEO rankings" actually means: the queries
+  you rank for, impressions, clicks, position. Free, no cookies on your site, just verify
+  each domain (DNS TXT or the Vercel integration). **Do this — it's the real SEO tool.**
+- ⚠️ **Google Analytics (GA4)** — be careful. It adds Google tracking/cookies, which cuts
+  against the "no ads, no data resold, cookieless" promise that *is* the project. You
+  already get pageviews from Vercel and search data from Search Console, so GA mostly adds
+  a privacy liability you'd have to disclose. Skip it unless you specifically want Google's
+  funnel tooling — and if so, run it in consent/cookieless mode and update the privacy note.
+
+---
+
 ## Copy-paste templates
 
 ### Show HN
