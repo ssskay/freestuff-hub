@@ -75,6 +75,60 @@ catalog is the perfect answer. Moves that compound:
 
 ---
 
+## Set up Google Search Console (the real SEO dashboard — do this)
+
+One **Domain property** covers the apex *and every subdomain* (dartmouth., cmu., future
+ones) at once. With Cloudflare:
+
+1. [search.google.com/search-console](https://search.google.com/search-console) → Add
+   property → **Domain** → enter `campusfreebies.com`.
+2. Google shows a TXT record. In **Cloudflare DNS** for campusfreebies.com → Add record →
+   Type `TXT`, Name `@`, Content = the `google-site-verification=…` string → Save (DNS only).
+3. Back in Search Console → **Verify** (give DNS a few minutes).
+4. **Submit sitemaps** (Sitemaps tab), one per origin:
+   `https://dartmouth.campusfreebies.com/sitemap-index.xml`,
+   `https://cmu.campusfreebies.com/sitemap-index.xml`,
+   `https://campusfreebies.com/sitemap-index.xml`.
+5. In a few days, the **Performance** tab shows which "free [thing] [school]" queries you
+   rank for — that's your feedback loop for what content to add next.
+
+## Get cited by AI (ChatGPT, Perplexity, Google AI Overviews)
+
+Shipped in code: `llms.txt` on every site (tells AI engines what the catalog is); structured
+data — FAQPage (`/faq`), Article (`/story`), Organization/WebSite (home); and `robots.txt`
+**allows** AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) on purpose —
+being cited is the goal, not blocked.
+
+Honest version of what moves it: AI answer engines cite sources they can extract cleanly
+*and that authoritative sites link to.* So the #1 AI-visibility lever is the same as SEO —
+clean Q&A content plus `.edu` links (below). Keep adding FAQ entries, especially
+school-specific ones ("Is the CMU transit pass really free?"). Don't expect overnight
+citations; `llms.txt` adoption is still uneven — structured data + authoritative links do
+most of the work.
+
+## On-campus = your best backlinks (this is the unlock)
+
+Connecting it to campus and "winning SEO" are **the same lever**: a link from an official
+`.edu` page carries enormous authority with Google *and* AI engines — one good `.edu`
+backlink beats a hundred random ones. So target campus pages that already have a public
+"resources" list and ask to be added (endorsement-as-resource, never paid):
+
+- **Financial-aid / first-gen offices** — they love "everything here is actually free," and
+  it reaches exactly the students who need it. Highest value.
+- **Library LibGuides** — librarians curate resource guides; one email can land a permanent
+  `.edu` link. Underrated, very on-ethos.
+- **Residential life / orientation** — the new-student resources packet = `.edu` link +
+  recurring traffic every term.
+- **Student government / class councils** — they run newsletters and link hubs.
+- **Department pages** — if a perk is theirs (the makerspace, the library), they may link back.
+
+Each one is simultaneously a campus integration, an authoritative backlink, and real student
+traffic. Physical options (QR flyer in dorms/library, a table at a resource fair, an
+orientation slide) work too but are higher-effort and don't carry SEO weight — do them for
+users, not rankings.
+
+---
+
 ## Copy-paste templates
 
 ### Show HN
