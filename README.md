@@ -72,3 +72,7 @@ No ads, no analytics cookies (Vercel Analytics is cookieless/aggregate), no
 per-school tip jars (the canonical one lives here), no affiliate links.
 
 Not affiliated with, endorsed by, or an official site of any university.
+
+---
+
+Maintained by [Sara Kay](https://sarakay.me) · [@ssskay](https://github.com/ssskay) · [more projects](https://sarakay.me/projects.html)
