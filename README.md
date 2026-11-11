@@ -1,8 +1,10 @@
 # Free Stuff on Campus — hub
 
-The apex landing page for **campusfreebies.com**: the umbrella over the per-school
+The apex landing page for **[campusfreebies.com](https://campusfreebies.com)**: the umbrella over the per-school
 catalogs. It lists every live school, points new schools at the open template, and
 holds the one canonical tip jar.
+
+![campusfreebies.com: the Free Stuff on Campus landing page with the live Dartmouth and Carnegie Mellon catalogs](docs/images/screenshot.jpg)
 
 It is a single static Astro page that reuses the same `public/tokens.css` and
 footer/disclaimer idiom as the school sites, so the platform looks of-a-piece.
